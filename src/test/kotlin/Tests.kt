@@ -9,61 +9,63 @@ class Tests {
 
     @Test
     fun positiveTest1() {
-        val inputString = "(){12}(po1)(<12>)"
-        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL $SUCCESSFUL_MESSAGE")
+        positiveTest("(){12}(po1)(<12>)")
     }
 
     @Test
     fun positiveTest2() {
-        val inputString = "{12}([w])1"
-        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL $SUCCESSFUL_MESSAGE")
+        positiveTest("{12}([w])1")
     }
 
     @Test
     fun positiveTest3() {
-        val inputString = "({12}(po1)<12>)"
-        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL $SUCCESSFUL_MESSAGE")
+        positiveTest("({12}(po1)<12>)")
     }
 
     @Test
     fun positiveTest4() {
-        val inputString = "123-{1}"
-        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL $SUCCESSFUL_MESSAGE")
+        positiveTest("123-{1}")
     }
 
     @Test
     fun negativeTest1() {
-        val inputString = "{[}"
-        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL 3")
+        negativeTest("{[}", 3)
     }
 
     @Test
     fun negativeTest2() {
-        val inputString = "([]))["
-        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL 5")
+        negativeTest("([]))[", 5)
     }
 
     @Test
     fun negativeTest3() {
-        val inputString = "foo(bar[i)"
-        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL 10")
+        negativeTest("foo(bar[i)", 10)
     }
 
     @Test
     fun negativeTest4() {
-        val inputString = ")[1]2[3]("
-        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL 1")
+        negativeTest(")[1]2[3](", 1)
     }
 
     @Test
     fun failTest1() {
-        val inputString = "123"
-        assertEquals("Error", checkingPairsForBrackets(inputString), UNSUCCESSFUL_MESSAGE)
+        failTest("123")
     }
 
     @Test
     fun failTest2() {
-        val inputString = ""
+        failTest("")
+    }
+
+    private fun positiveTest(inputString:String) {
+        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL $SUCCESSFUL_MESSAGE")
+    }
+
+    private fun negativeTest(inputString:String, numberFailSymbol:Int) {
+        assertEquals("Error", checkingPairsForBrackets(inputString), "$inputString $SEPARATING_SYMBOL $numberFailSymbol")
+    }
+
+    private fun failTest(inputString:String) {
         assertEquals("Error", checkingPairsForBrackets(inputString), UNSUCCESSFUL_MESSAGE)
     }
 }
